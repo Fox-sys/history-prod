@@ -1,0 +1,30 @@
+{% extends 'history_main/base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link href="{% static 'media.css' %}" type="text/css" rel="stylesheet">
+{% endblock %}
+{% block title %}
+    {{object.last_name}} {{ object.first_name }} {{ object.middle_name }}
+{% endblock title %}
+{% block main %}
+    <div class="single_object">
+        <img class="image" src="{{ object.photo.url }}" alt="" width="300">
+        <div class="info">
+            <p class="name">{{ object.first_name }} {{ object.middle_name }} {{object.last_name}}</p>
+            <div class="object_desc">
+                {{ object.desc }} <br>
+                Статус: {% if object.is_alive %} Жив {% else %} Мёртв {% endif %} <br>
+                Дата рождения: {{ object.birth_date.day }}.{{ object.birth_date.month }}.{{ object.birth_date.year }} <br>
+                {% if not object.is_alive %}
+                    Дата смерти: {{ object.death_date.day }}.{{ object.death_date.month }}. {{ object.death_date.year }} <br>
+                {% endif %}
+            </div>
+            {% if user == object.creator %}
+                <div class="actions">
+                    <a class="action" onclick="ask('Вы уверены, что хотите удалить эту запись?', '{% url 'confirm_delete_solder' pk=object.pk %}')">Удалить</a>
+                    <a class="action" href="{% url 'update_solder' pk=object.pk %}">Редактировать</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock main %}

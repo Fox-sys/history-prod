@@ -1,0 +1,35 @@
+/* body{
+    background-color: #faebd7;
+} */
+
+.logo > img {
+    height: 55px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #883F41;
+    color: #fff;
+
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+}
+
+.item {
+    padding: 10px 15px;
+    font-size: 20px;
+    margin-left: 5px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.item:hover{
+    background-color: #faebd7;
+    color: #883F41;
+}

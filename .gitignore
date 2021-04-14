@@ -1,0 +1,8 @@
+*.pyc
+/env
+.vscode
+Makefile
+solder_photos/
+museum_photos/
+.env.prod
+.env.prod.db

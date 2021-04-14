@@ -1,0 +1,42 @@
+{% extends 'history_main/base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link href="{% static 'forms.css' %}" type="text/css" rel="stylesheet">
+    <script src="{% static 'validation.js' %}"></script>
+{% endblock %}
+{% block title %}
+    Авторизация
+{% endblock title %}
+{% block main %}
+    {% if user.is_authenticated %}
+        <script>
+            document.location.href = "/";
+        </script>
+    {% endif %}
+    <div class="form_container">
+        <div>
+            <p class="title">Авторизация</p>
+            <form method="post" action='{% url "login" %}'>
+                {% csrf_token %}
+                <div class="input">
+                    <label class="form_label">Логин: </label>
+                    <input onchange="show_button()" type="text" class="form_input" name="username">
+                </div>
+                <div class="input">
+                    <label class="form_label">Пароль: </label>
+                    <input onchange="show_button()" type="password" class="form_input" name="password">
+                </div>
+                <button class="submit_button" >Авторизация</button>
+                <input type="hidden" name="next" value="{{ next }}">
+                <div class="add">
+                    <a href="{% url 'register' %}">Регистрация</a>
+                    <a href="{% url 'change_password' %}">Забыл пароль</a>
+                </div>
+                {% if form.errors %}
+                    <span>Неверное имя пользователя или пароль</span>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+   
+{% endblock main %}

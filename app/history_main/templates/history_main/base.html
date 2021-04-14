@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'logo.png' %}" type="image/x-icon">
+    <link href="{% static 'header.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'main.css' %}" type="text/css" rel="stylesheet">
+    <script src="{% static 'ask.js' %}" ></script>
+    {% block extra_css %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+            <div class="section">
+                <a class="logo" href="http://sch45.com.ru"><img src="{% static 'logo.png' %}" alt=""></a>
+                <a class="item" href="http://sch45.com.ru" class="href">Главная</a>
+                <a class="item" href="{% url 'index' %}" class="href">Ветераны</a>
+                <a class="item" href="{% url 'exhibit_list' %}" class="href">Музей</a>
+                {% if user.is_staff %}
+                    <a class="item" href="/admin" class="href">Админ-панель</a>
+                {% endif %}
+            </div>
+    </header>
+    <main>
+        <!-- <div class="lenta-right lenta"><img src="{% static 'lenta.jpg' %}" alt=""></div> -->
+        <div class="content">
+            {% block main %}{% endblock %}
+        </div>
+    </main>
+    <br>
+    <style>
+        html {
+            background-image: url("{% static 'back.png' %}");
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-attachment: fixed;
+        }
+    </style>
+</body>
+</html>
