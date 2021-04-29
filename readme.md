@@ -27,6 +27,6 @@ How to install?
 Superuser account: SU 135790asz
 
 # Patch Note:
-Dev Version: 1.1.1
+Dev Version: 1.2.0
 
 - changed password validation
