@@ -66,6 +66,8 @@ class Exhibit(models.Model):
     name = models.CharField(max_length=150)
     desc = models.TextField()
     image = models.FileField(upload_to="museum_photos")
+    tags = models.ManyToManyField('Tag', blank=True)
+    
 
     def __str__(self):
         return f"{self.id} - {self.name}"

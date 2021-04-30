@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from .models import SolderPost, Exhibit, MainUser
+from .models import SolderPost, Exhibit, MainUser, Tag
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 

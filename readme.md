@@ -27,6 +27,6 @@ How to install?
 Superuser account: SU 135790asz
 
 # Patch Note:
-Dev Version: 1.2.0
+Dev Version: 1.2.1
 
-- changed password validation
+- fixed search for exhibits

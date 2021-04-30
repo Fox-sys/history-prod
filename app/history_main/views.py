@@ -40,26 +40,24 @@ class ListPagerView(ListView):
         search_type = self.request.GET.get('type', None)
         search_info = self.request.GET.get('info', None)
         if search_type == "tags" and search_info:
-            form = SearchForm({'info': search_info})
-            if form.is_valid():
-                try:
-                    tags = form.get_tags()
-                    queryset = queryset.filter(tags__in=set(tags)).distinct('pk')
-                    # print(f"Объектов на вывод: {len(queryset)} \nТэгов:{len(tags)} \nНе повторяющихся статей: {len(set(queryset))}")        
-                except Exception as e: queryset = self.model.objects.none()
+            queryset = self.tags_search(queryset, search_info)
         elif search_type == 'names' and search_info:
-            form = SearchForm({"info": search_info})
-            if form.is_valid():
-                queryset1 = SolderPost.objects.none()
-                queryset2 = SolderPost.objects.none()
-                queryset3 = SolderPost.objects.none()
-                for i in form.get_names():
-                    queryset1 = queryset1 | queryset.filter(first_name=i)
-                    queryset2 = queryset2 | queryset.filter(middle_name=i)
-                    queryset3 = queryset3 | queryset.filter(last_name=i)
-                queryset = (queryset1 | queryset2 | queryset3).distinct('pk')
+            queryset = self.names_search(queryset, search_info)
         return queryset
 
+    def names_search(self, queryset, search_info):
+        return queryset
+
+
+    def tags_search(self, queryset, search_info):
+        form = SearchForm({'info': search_info})
+        if form.is_valid():
+            try:
+                tags = form.get_tags()
+                queryset = queryset.filter(tags__in=set(tags)).distinct('pk')
+                    # print(f"Объектов на вывод: {len(queryset)} \nТэгов:{len(tags)} \nНе повторяющихся статей: {len(set(queryset))}")        
+            except Exception as e: queryset = self.model.objects.none()
+        return queryset
 
 class SolderList(ListPagerView):
     """
@@ -69,6 +67,19 @@ class SolderList(ListPagerView):
     template_name = "history_main/solder_list.html"
     url = '/'
 
+
+    def names_search(self, queryset, search_info):
+        form = SearchForm({"info": search_info})
+        if form.is_valid():
+            queryset1 = SolderPost.objects.none()
+            queryset2 = SolderPost.objects.none()
+            queryset3 = SolderPost.objects.none()
+            for i in form.get_names():
+                queryset1 = queryset1 | queryset.filter(first_name=i)
+                queryset2 = queryset2 | queryset.filter(middle_name=i)
+                queryset3 = queryset3 | queryset.filter(last_name=i)
+            queryset = (queryset1 | queryset2 | queryset3).distinct('pk')
+        return queryset
 
 class SolderDetail(DetailView):
     """
@@ -209,6 +220,15 @@ class ExhibitList(ListPagerView):
     model = Exhibit
     template_name = "history_main/exhibit_list.html"
     url = '/exhibits/'
+
+    def names_search(self, queryset, search_info):
+        form = SearchForm({'info': search_info})
+        if form.is_valid():
+            result = self.model.objects.none()
+            for i in form.get_names():
+                result = result | queryset.filter(name__contains=i)
+        return result
+        
 
 
 class ExhibitDetail(DetailView):
