@@ -78,6 +78,7 @@ class Command(BaseCommand):
         white_list = self.moder_permission_ids + [25, 26, 27, 23]
         return white_list
 
+    @property
     def get_list_from_file(self, list_file):
         return list_file.read().split()
 

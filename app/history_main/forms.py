@@ -80,7 +80,14 @@ class SearchForm(forms.Form):
     info = forms.CharField(max_length=100)
 
     def get_tags(self):
-        return [Tag.objects.get(tag=i) for i in self.cleaned_data['info'].split('-')]
+        tags = []
+        for i in self.cleaned_data['info'].split('-'):
+            try:
+               tags.append(Tag.objects.get(tag=i))
+            except:
+                tag = Tag.objects.create(tag=i)
+                tags.append(tag)
+        return tags
     
     def get_names(self):
         return [i for i in self.cleaned_data['info'].split('-')]
