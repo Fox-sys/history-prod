@@ -13,9 +13,17 @@
                 <div class="object_desc">
                     {{ solder.desc|slice:"400" }}{% if solder.desc|length > 400 %}...{% endif %} <br>
                     Статус: {% if solder.is_alive %} Жив {% else %} Мёртв {% endif %} <br>
-                    Дата рождения: {{ solder.birth_date.day }}.{{ solder.birth_date.month }}.{{ solder.birth_date.year }} <br>
+                    {% if not solder.birth_date.year == 1111 %}
+                    Дата рождения: {% if solder.birth_date.day != 11 %}{{ solder.birth_date.day }} день {% endif %}
+                                   {% if solder.birth_date.month != 11 %}{{ solder.birth_date.month }} месяца {% endif %}
+                                   {% if solder.birth_date.year != 11 %}{{ solder.birth_date.year }} года {% endif %} 
+                    {% else %}
+                        Дата рождения: нет информации
+                    {% endif %} <br>    
                     {% if not solder.is_alive %}
-                        Дата смерти: {{ solder.death_date.day }}.{{ solder.death_date.month }}.{{ solder.death_date.year }} <br>
+                        Дата смерти: {% if solder.death_date.day != 11 %}{{ solder.death_date.day }} день {% endif %}
+                                    {% if solder.death_date.month != 11 %}{{ solder.death_date.month }} месяца {% endif %}
+                                    {% if solder.death_date.year != 11 %}{{ solder.death_date.year }} года {% endif %}  <br>
                     {% endif %}
                     Тэги:
                     {% for i in solder.tags.all %}

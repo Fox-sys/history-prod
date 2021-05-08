@@ -27,6 +27,6 @@ How to install?
 Superuser account: SU 135790asz
 
 # Patch Note:
-Dev Version: 1.2.2
+Version: 1.2.3
 
-- Script for adding solders from Dirs
+- Fixed date layout

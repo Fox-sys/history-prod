@@ -14,10 +14,22 @@
             <div class="object_desc">
                 {{ object.desc }} <br>
                 Статус: {% if object.is_alive %} Жив {% else %} Мёртв {% endif %} <br>
-                Дата рождения: {{ object.birth_date.day }}.{{ object.birth_date.month }}.{{ object.birth_date.year }} <br>
+                {% if not object.birth_date.year == 1111 %}
+                    Дата рождения: {% if object.birth_date.day != 11 %}{{ object.birth_date.day }} день {% endif %}
+                                   {% if object.birth_date.month != 11 %}{{ object.birth_date.month }} месяца {% endif %}
+                                   {% if object.birth_date.year != 11 %}{{ object.birth_date.year }} года {% endif %} 
+                {% else %}
+                    Дата рождения: нет информации
+                {% endif %} <br> 
                 {% if not object.is_alive %}
-                    Дата смерти: {{ object.death_date.day }}.{{ object.death_date.month }}. {{ object.death_date.year }} <br>
+                    Дата смерти: {% if object.death_date.day != 11 %}{{ object.death_date.day }} день {% endif %}
+                                 {% if object.death_date.month != 11 %}{{ object.death_date.month }} месяца {% endif %}
+                                 {% if object.death_date.year != 11 %}{{ object.death_date.year }} года {% endif %} <br>
                 {% endif %}
+                Тэги:
+                    {% for i in object.tags.all %}
+                        {{i.tag}}
+                    {% endfor %}
             </div>
             {% if user == object.creator %}
                 <div class="actions">
