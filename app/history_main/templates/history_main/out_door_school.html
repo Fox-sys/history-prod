@@ -1,0 +1,30 @@
+{% extends 'history_main/base.html' %}#хуй
+{% load static %}
+{% block title %}Выездная школа{% if not page == 1 %} страница: {{ page }}{% endif %}{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'media_school.css' %}" type="text/css" rel="stylesheet">
+{% endblock %}
+{% block main %}
+    {% for object in object_list %}
+        <div class="single_object">
+            <div class="info">
+                <p class="name">{{ object.name }}</p>
+                <div class="object_desc">
+                    {% for image in object.images.all|slice:"9" %}
+                    <img class="image" src="{{ image.image.url }}" alt="" style="width:31%">
+                    {% endfor %}
+                </div>
+                <a class="action" href="{% url 'school_detail' pk=object.id %}">Подробнее</a>
+            </div><br>
+        </div>
+        <br>
+    {% endfor %}
+    {% if total > 1 %}
+    <div class="pages">
+        <a href="{% url 'school_list' %}?&type={{ search_type }}&info={{ info }}" class="page_link action">Первая</a>
+        {% if page > 1 %}<a href="{% url 'school_list' %}?page={{ last }}&type={{ search_type }}&info={{ info }}" class="action page_link"><- Предведущая</a>{% endif %}
+        {% if page != total %}<a href="{% url 'school_list' %}?page={{ next }}&type={{ search_type }}&info={{ info }}" class="action page_link">Следущая -></a>{% endif %}
+        <a href="{% url 'school_list' %}?page={{ total }}&type={{ search_type }}&info={{ info }}" class="action page_link">Последняя</a>
+    </div>
+    {% endif %}
+{% endblock main %}

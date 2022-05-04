@@ -1,0 +1,62 @@
+{% extends 'history_main/base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link href="{% static 'forms.css' %}" type="text/css" rel="stylesheet">
+    <script src="{% static 'validation.js' %}"></script>
+{% endblock %}
+{% block title %}
+    Добавление поста
+{% endblock title %}
+{% block main %}
+    <div class="form_container">
+        <div>
+            <p class="title">Добавление Ветерана</p>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input">
+                    <label class="form_label">Имя*: </label>
+                    <input onchange="show_button()" type="text" class="form_input" name="first_name" maxlength="150">
+                </div>
+                <div class="input">
+                    <label class="form_label">Отчество*: </label>
+                    <input onchange="show_button()" type="text" class="form_input" name="middle_name" maxlength="15000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000">
+                </div>
+                <div class="input">
+                    <label class="form_label">Фамилия*: </label>
+                    <input onchange="show_button()" type="text" class="form_input" name="last_name" maxlength="150">
+                </div>
+                <div class="input">
+                    <label class="form_label">Описание*: </label>
+                    <textarea onchange="show_button()" name="desc" id="" cols="35" rows="10" class="form_input"></textarea>
+                </div>
+                <div class="input">  
+                    <label class="form_label" >Статус: </label>
+                    <input onchange="show_button()" type="checkbox" name="is_alive" id='' class="form_input state">
+                </div>
+                <div class="input">
+                    <label class="form_label">Фото*: </label>
+                    <input onchange="show_button()" type="file" name="photo" accept="images/" id="" class="form_input">
+                </div>
+                <div class="input">
+                    <label class="form_label">Дата рождения*: </label>
+                    <input onchange="show_button()" class="form_input" type="date" name="birth_date" id="">
+                </div>
+                <div class="input">
+                    <label class="form_label death_date">Дата смерти: </label>
+                    <input onchange="show_button()" class="form_input death_date" type="date" name="death_date" id="">
+                </div>
+                <button class="submit_button" type="submit">отправить</button>
+                {% if form.errors %}
+                    <span>Возникла какая то ошибка, проверьте, все ли поля отмеченный знаком "*" заполнены</span>
+                {% endif %}
+                {% if message %}
+                    <span>
+                        {% for key, value in message.items %}
+                            Поле {{ key }}: "{{value}}" находится в списке запрещённых слов<br>
+                        {% endfor %}
+                    </span>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock main %}

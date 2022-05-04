@@ -1,0 +1,39 @@
+{% extends 'history_main/base.html' %}
+{% load static %}
+{% block title %}Учителя{% if not page == 1 %} страница: {{ page }}{% endif %}{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'media.css' %}" type="text/css" rel="stylesheet">
+{% endblock %}
+{% block main %}
+    {% for object in object_list %}
+        <div class="single_object">
+            <img class="image" src="{% if object.image %}{{ object.image.url }}{% else %}/media/user_avatars/default.png{% endif %}" alt="">
+            <div class="info">
+                <p class="name">{{ object.full_name }}</p>
+                <div class="object_desc">
+                    {% if object.education %} Образование: {{ object.education }} <br> {% endif %}
+                    {% if object.access %} Должность: {{ object.access }} <br> {% endif %}
+                    {% if object.method_union %} Администрация/МетодОбъединение: {{ object.method_union }} <br> {% endif %}
+                    {% if object.subject %} Преподаваемые дисциплины: {{ object.subject }} <br> {% endif %}
+                    {% if object.qualification %} Квалификация: {{ object.qualification }} <br> {% endif %}
+                    {% if object.qualification_data %} Данные о повышении квалификации (за последние 3 года!) (тема, организация, год): {{ object.qualification_data }} <br> {% endif %}
+                    {% if object.ranks %} Звания/награды: {{ object.ranks }} <br> {% endif %}
+                    {% if object.general_experience_years %} Общий стаж работы, количество полных лет: {{ object.general_experience_years }} <br> {% endif %}
+                    {% if object.general_year_since %} Общий стаж работы, с какого года: {{ object.general_year_since }} <br> {% endif %}
+                    {% if object.ped_experience_years %} Педогогический стаж работы, количество полных лет: {{ object.ped_experience_years }} <br> {% endif %}
+                    {% if object.ped_year_since %} Педогогический стаж работы, с какого года: {{ object.ped_year_since }} <br> {% endif %}
+                    {% if object.in_our_school_since %} В нашей школе с: {{ object.in_our_school_since }} <br> {% endif %}
+                </div>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+    {% if total > 1 %}
+    <div class="pages">
+        <a href="{% url 'teacher_list' %}?&type={{search_type}}&info={{info}}" class="page_link action">Первая</a>
+        {% if page > 1 %}<a href="{% url 'teacher_list' %}?page={{last}}&type={{search_type}}&info={{info}}" class="action page_link"><- Предведущая</a>{% endif %}
+        {% if page != total %}<a href="{% url 'teacher_list' %}?page={{next}}&type={{search_type}}&info={{info}}" class="action page_link">Следущая -></a>{% endif %}
+        <a href="{% url 'teacher_list' %}?page={{total}}&type={{search_type}}&info={{info}}" class="action page_link">Последняя</a>
+    </div>
+    {% endif %}
+{% endblock main %}

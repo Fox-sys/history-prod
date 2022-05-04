@@ -1,0 +1,18 @@
+{% extends 'history_main/base.html' %}
+{% load static %}
+{% block title %}{{ object.name }}{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'media_school.css' %}" type="text/css" rel="stylesheet">
+{% endblock %}
+{% block main %}
+    <div class="single_object">
+            <div class="info">
+                <p class="name">{{ object.name }}</p>
+                <div class="object_desc">
+                    {% for image in object.images.all %}
+                    <img class="image" src="{{ image.image.url }}" alt="" style="width:30%">
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+{% endblock main %}

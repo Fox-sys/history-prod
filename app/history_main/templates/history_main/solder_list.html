@@ -1,0 +1,38 @@
+{% extends 'history_main/base.html' %}
+{% load static %}
+{% block title %}Главная{% if not page == 1 %} страница: {{ page }}{% endif %}{% endblock %}
+{% block extra_css %}
+    <link href="{% static 'media.css' %}" type="text/css" rel="stylesheet">
+{% endblock %}
+{% block main %}
+    {% for solder in object_list %}
+        <div class="single_object">
+            <img class="image" src="{{ solder.photo.url }}" alt="">
+            <div class="info">
+                <p class="name">{{ solder.first_name }} {{ solder.middle_name }} {{solder.last_name}}</p>
+                <div class="object_desc">
+                    {{ solder.desc|slice:"400" }}{% if solder.desc|length > 400 %}...{% endif %} <br>
+                    Статус: {% if solder.is_alive %} Жив {% else %} Мёртв {% endif %} <br>
+                    {% if not solder.birth_date.year == 1111 %}
+                                  Дата рождения: {% if solder.birth_date.year != 11 %}{{ solder.birth_date.year }} год {% endif %} 
+                    {% else %}
+                        Дата рождения: нет информации
+                    {% endif %} <br>    
+                    {% if not solder.is_alive %}
+                                    {% if solder.death_date.year != 1111 %}Дата смерти: {{ solder.death_date.year }} год <br>{% endif %}
+                    {% endif %}
+                </div>
+                <a class="action" href="{% url 'solder_detail' pk=solder.id %}">Подробнее</a>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+    {% if total > 1 %}
+    <div class="pages">
+        <a href="{% url 'index' %}?&type={{search_type}}&info={{info}}" class="page_link action">Первая</a>
+        {% if page > 1 %}<a href="{% url 'index' %}?page={{last}}&type={{search_type}}&info={{info}}" class="action page_link"><- Предведущая</a>{% endif %}
+        {% if page != total %}<a href="{% url 'index' %}?page={{next}}&type={{search_type}}&info={{info}}" class="action page_link">Следущая -></a>{% endif %}
+        <a href="{% url 'index' %}?page={{total}}&type={{search_type}}&info={{info}}" class="action page_link">Последняя</a>
+    </div>
+    {% endif %}
+{% endblock main %}

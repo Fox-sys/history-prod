@@ -1,0 +1,12 @@
+*.pyc
+/env
+.vscode
+Makefile
+solder_photos/
+museum_photos/
+outdoor_school/
+.env.prod
+.env.prod.db
+data/
+venv/
+.idea/

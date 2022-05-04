@@ -1,0 +1,36 @@
+.content {
+    margin-left: 10%;
+    margin-top: 30px;
+    width: 80%;
+    /* background-color: #EFD0A8; */
+}
+
+.search_div {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #EFD0A8;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.search {
+    width: 70%;
+}
+
+.action, button {
+    color: #fff;
+    background-color: #883F41;
+    border: 8px solid #883F41;
+    position: relative;
+}
+
+.action:hover, button:hover{
+    text-decoration: underline;
+}
+
+a.action {
+    top: 20px
+}
